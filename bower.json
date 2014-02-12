@@ -1,0 +1,27 @@
+{
+  "name": "Threes",
+  "version": "0.0.1",
+  "authors": [
+    "Alexander White <alex.white@mac.com>"
+  ],
+  "description": "Sexiness comes in threes.",
+  "main": "threes.html",
+  "keywords": [
+    "threes",
+    "valentines"
+  ],
+  "license": "n",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "underscore": "~1.6.0",
+    "d3": "~3.4.1"
+  }
+}
