@@ -2,12 +2,12 @@ var gameOver=false;
 var width = 400;
 var height = 400;
 var colorPal={
-  'privateEyes' : '#EBE7C5',
-  'greenTea' : '#9AA68B',
-  'crowned' : '#737278',
-  'asphaltReflection' : '#2C2830',
-  'valentineWine': '#692E50'
-}
+  privateEyes : '#EBE7C5',
+  greenTea : '#9AA68B',
+  crowned : '#737278',
+  asphaltReflection : '#2C2830',
+  valentineWine: '#692E50'
+};
 var topNumber=3;
 var animDur=800;
 var animLag=20;
@@ -17,7 +17,10 @@ var lastdx,
     lastdy,
     lastx,
     lasty;
+
 var nextPieceValue=Math.floor((Math.random()*3)+1); //[1,3]
+
+/////SETUP SVGs: INSERT SOME SVG ELEMENTS INTO THE DOM USING D3
 var previewSvg = d3.select("body").
   append("svg").
   attr("width", height/4).
@@ -30,12 +33,15 @@ var previewSvg = d3.select("body").
      "border-width": 6,
      "box-shadow": "0px 6px " + colorPal.valentineWine,
     "margin": 10
-  });
-var svg = d3.select("body").
-  append("svg").
-  attr("width", height).
-  attr("height", width).
-  style({
+  });///
+var svg = d3.select("body")
+  .append("svg")
+  .attr({
+    "class": "mainSVG",
+    "width": height,
+    "height": width
+  })
+  .style({
      "background-color": colorPal.privateEyes,
      "border-color": colorPal.crowned,
      "border-style": "solid",
@@ -43,9 +49,21 @@ var svg = d3.select("body").
      "border-width": 6,
      "box-shadow": "0px 6px " + colorPal.valentineWine,
     "margin": 10
-  });
+  })
+  .append("g")
+  .attr({
+    "class":"mainBackgroundLayer" })
+  .style({
+    "margin": 0 });
+  d3.select(".mainSVG")
+  .append("g")
+  .attr({
+    "class":"mainPieceLayer" })
+  .style({
+    "margin": 0 });
+  
 
-
+/////////////!!!!!!!!!!!!!!!!!!! Main util functions for this program
 threes.utils={
   // This is heart of the d3 methods
   // the data (pieceData) is bound to the svg children in this method
@@ -59,7 +77,7 @@ threes.utils={
         return (-0.5+d.x)*width/4;
       else
         return (0.5+d.x)*width/4;
-    }
+    };
     var enterYFunct=function(d){
       if (dy=== -1)
         return (1.5+d.y)*height/4;
@@ -67,11 +85,12 @@ threes.utils={
         return (-0.5+d.y)*height/4;
       else
         return (0.5+d.y)*height/4;
-    }
+    };
     var enterYFunctText=function(d){
        return enterYFunct(d)+height/25;
-    }
-    var circleData=svg.selectAll("circle") //gen an array of all circle element, possibly []
+    };
+    var circleData=d3.select(".mainPieceLayer")
+      .selectAll("circle") //gen an array of all circle element, possibly []
       .data(pieceData,function(d) { return(d.id); }); //bind data to elements
       //enter, if there isn't a circle matching a datapoint, add one
       circleData.enter()
@@ -106,11 +125,12 @@ threes.utils={
          'r': 0
       })
       .style({
-        "fill": "maroon",
+        "fill": "#800000",
       })
       .remove();
 
-    var textData=svg.selectAll("text") //gen an array of all circle element, possibly [] asdf
+    var textData=d3.select(".mainPieceLayer")
+      .selectAll("text") //gen an array of all circle element, possibly [] asdf
       .data(pieceData,function(d) { return(d.id); }); //bind data to elements
       //enter, if there isn't a circle matching a datapoint, add one
       textData.enter()
@@ -124,7 +144,7 @@ threes.utils={
         "text-anchor": 'middle',
         'vertical-align': 'text-bottom'
       })
-      .text(function(d){return d.value});
+      .text(function(d){return d.value;});
       //applies transitions to both the newly added and old/updated circles
       textData.transition()
       .ease("bounce")
@@ -133,7 +153,7 @@ threes.utils={
         "x" : function(d){return (0.5+d.x)*width/4;} ,
         "y" : function(d){return (0.5+d.y)*height/4 +height/25;},
       })
-      .text(function(d){return d.value})
+      .text(function(d){return d.value;})
       .delay(animLag)
       .duration(animDur) ;
       //remove and animate exiting circles
@@ -144,6 +164,8 @@ threes.utils={
       })
       .remove();
   },
+  //////////////////////////////////////////////////////////
+  //draw the background for both the preview and main svg
   drawBackgroundGrid: function(){
     //preview image
     previewSvg
@@ -162,8 +184,7 @@ threes.utils={
     var indices=_.map(grid,function(val){
       return {x: Math.floor(val/4), y: val%4};
     });
-    console.log(svg.selectAll("rect").data(indices).enter());
-    svg.selectAll("rect")
+    d3.select(".mainBackgroundLayer").selectAll("rect")
       .data(indices)
       .enter()
       .append("rect")
@@ -177,6 +198,8 @@ threes.utils={
         "fill" : colorPal.greenTea
       });
   },
+  //////////////////////////////////////////////////////////
+  // show the next preview piece
   updatePreviewImage:function(){
     //the circle
     var oldCirc= previewSvg
@@ -245,9 +268,9 @@ threes.utils={
         .duration(animDur+animLag);
     }
   },
+  //////////////////////////////////////////////////////////
+  // Add a new piece to the board
   addPiece: function(dx,dy){
-
-    //add a new piece
     var newX,
       newY;
     var firstAttempt=true;
@@ -258,21 +281,15 @@ threes.utils={
         firstAttempt=false;
       }else{
         var freeCoord=Math.floor(Math.random()*4);
-        if(dx===-1) { newX=3;  newY=freeCoord}
-        else if(dx===1) { newX=0;  newY=freeCoord}
-        else if(dy===-1) { newY=3;  newX=freeCoord}
-        else if(dy===1) { newY=0;  newX=freeCoord}
+        if(dx===-1) { newX=3;  newY=freeCoord;}
+        else if(dx===1) { newX=0;  newY=freeCoord;}
+        else if(dy===-1) { newY=3;  newX=freeCoord;}
+        else if(dy===1) { newY=0;  newX=freeCoord;}
       }
     }while(_.find(pieceData,function(item){
       return (item.x===newX && item.y===newY);
     }) );
-    /*var newValue =  Math.floor( (Math.random()*3)+1); //[1,3]
-    if (newValue ===3){
-      if( topNumber >=48 ){ //the highest number tile
-        if( Math.random<0.2)
-          newValue = topNumber/8; // ie 48/8=6, 96/8=12 192/8= 24  (the acutal top value for a NEW tile)
-      }
-    }*/
+    //add the new piece
     pieceData.push({
       x:newX,
       y:newY,
@@ -284,6 +301,8 @@ threes.utils={
     //save this  move direction and new piece position
     lastdx=dx; lastdy=dy; lastx=newX; lasty=newY;
   },
+  //////////////////////////////////////////////////////////
+  // calculate the value of the next piece, will be shown in the preview svg
   genNextPieceValue : function(){
     nextPieceValue =  Math.floor( (Math.random()*3)+1); //[1,3]
     if (nextPieceValue ===3){
@@ -294,14 +313,15 @@ threes.utils={
     }
 
   },
-  //only used for initialization the starting pieces = now
+  ///////////////////////////////////////////////////////////
+  // add random random pieces, only used for initialization the starting pieces now
   addRandomPiece: function(newVal){
     newVal= newVal || Math.floor( (Math.random()*3)+1);//[1,3]
     //add a new piece
     var newX,
       newY;
     do{
-      newX=Math.floor(Math.random()*4),
+      newX=Math.floor(Math.random()*4);
       newY=Math.floor(Math.random()*4);
     }while(_.find(pieceData,function(item){
       return (item.x===newX && item.y===newY);
@@ -315,12 +335,15 @@ threes.utils={
     //check to see if game is over
     threes.utils.isAnyMovePossible();
   },
+  //////////////////////////////////////////////////////////
+  //check to see if there are any possible moves, if not the game is over
   isAnyMovePossible:function(){
-    //return pieceData.length<16;
+    //are any moves possible?
     var gameOn= !!threes.utils.canMoveInDir(0,1) ||
       !!threes.utils.canMoveInDir(0,-1) ||
       !!threes.utils.canMoveInDir(1,0) ||
       !!threes.utils.canMoveInDir(-1,0);
+    //if not, declare the game over and animate a gameover text
     if(!gameOn){
       gameOver=true;
       setTimeout(function(){
@@ -346,6 +369,8 @@ threes.utils={
     }
     return gameOn;
   },
+  //////////////////////////////////////////////////////////
+  // is a move in the given direction possible?
   canMoveInDir:function(dx,dy){
     var moveArray=threes.utils.moveInDirArray(dx,dy);
     var itemThatCanMove=_.find(moveArray,function(item){
@@ -353,8 +378,9 @@ threes.utils={
     });
     return !!itemThatCanMove;
   },
-  moveInDirArray:function(dx,dy,piecesToRemove){ //3rd arguement is optional
-
+  //////////////////////////////////////////////////////////
+  // helper function which returns an array of all the pieces.  Pieces have field .canMove which will be true/false if they can/not move
+  moveInDirArray:function(dx,dy,piecesToRemove){ //3rd arguement is optional, should be an empty array.  Pieces to delete will be added to this array.
     var canMoveArray = [];
     //sort the data.  The sorted data will be sorted either left to right, top to bot, bot top or R to L dependeing on dx and dy
     var sortedData=_.sortBy(pieceData,function(piece){
@@ -407,9 +433,11 @@ threes.utils={
       if(coord.y<0) return false;
       if(coord.x>3) return false;
       if(coord.y>3) return false;
-      return true
+      return true;
     }
   },
+  //////////////////////////////////////////////////////////
+  // Performs a move action in the given direction.
   smartMove: function(dx,dy){
     var piecesToRemove=[];
     var canMoveArray =threes.utils.moveInDirArray(dx,dy,piecesToRemove);
@@ -425,7 +453,7 @@ threes.utils={
           pieceToMove.y+=dy;
         }
       }
-    })
+    });
 
     //threes.utils.updateAndAddPieces(pieceData);
 
@@ -434,7 +462,6 @@ threes.utils={
       var onRemList = _.find(piecesToRemove,function(remPiece){
         return remPiece.id===piece.id;
       });
-      console.log(onRemList);
       if( !onRemList)
         return true;
       return false;
