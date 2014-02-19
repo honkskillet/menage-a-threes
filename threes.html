@@ -3,22 +3,60 @@
   <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     
 </head>
-<body bgcolor="gray" >
-    <svg width="100" height="100" style=" background-color: rgb(235, 231, 197); border: 6px solid rgb(115, 114, 120); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; box-shadow: rgb(105, 46, 80) 0px 6px; margin: 10px;">
-        <g  style="font-family: 'Lobster', cursive;"><text x="0" y="20" fill="black">Hi there123456</text></g>
-        <g style="font-family: FontAwesome; text-anchor: middle; ">
-            <text x="50" y="50" fill="red"  font-size="80px" dy=".35em">&#xf08a</text>
-<!--
-            <text x="70" y="70" fill="red">&#xf004</text>
-            <text x="50" y="70" fill="red">&#xf182</text>
-            <text x="70" y="50" fill="red">&#xf183</text>
--->
-        <g>
-        
-    </svg>
+<body bgcolor="#FBF9ED" >
+    
+  <svg class="previewSvg">
+    <g class="previewGroup">
+      
+    </g>
+  </svg>    
+  <svg class="mainSVG">
+    <filter id="innerShadowFilter" x="-50%" y="-50%" width="200%" height="200%">		
+			<feOffset dy="5" dx="0"/>
+			<feComposite in2="SourceAlpha" operator="arithmetic"
+					k2="-1" k3="1" result="shadowDiff"/>
+			<feFlood flood-color="#E981BC" />
+			<feComposite in2="shadowDiff" operator="in" result="shadow"/>
+			<feMerge>
+				<feMergeNode in="SourceGraphic"/>
+				<feMergeNode in="shadow"/>
+			</feMerge>
+		</filter>
+    <filter id="dropShadowPurpleFilter">
+      <feOffset dx="0" dy="5" result="offset"/>
+      <feFlood flood-color="#8869D1"/>
+      <feComposite in2="offset" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="dropShadowTealFilter">
+      <feOffset dx="0" dy="5" result="offset"/>
+      <feFlood flood-color="#4C8EAF"/>
+      <feComposite in2="offset" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="dropShadowPinkFilter">
+      <feOffset dx="0" dy="5" result="offset"/>
+      <feFlood flood-color="#D4569D"/>
+      <feComposite in2="offset" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </svg>     
+  <svg class="metaGameSVG"> 
+    
+  </svg>
 </body>
 <script src="bower_components/d3/d3.min.js" charset="utf-8"></script>
 <script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/jquery/jquery.min.js"></script>
+<script src="fontUtil.js"></script><!--Place before thress.js-->
 <script src="threes.js"></script>
 <!--  !!!!INCLUDE JQUERY -->
