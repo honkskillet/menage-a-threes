@@ -24,6 +24,7 @@
     "underscore": "~1.6.0",
     "d3": "~3.4.1",
     "font-awesome": "~4.0.3",
-    "SoundJS": "CreateJS/SoundJS"
+    "jquery-cookie": "~1.4.0",
+    "howler": "~1.1.17"
   }
 }

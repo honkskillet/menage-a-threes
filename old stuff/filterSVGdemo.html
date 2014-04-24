@@ -1,0 +1,38 @@
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    
+</head>
+<body>
+  <svg width="500" height="500" style=" background-color: rgb(235, 231, 197); border: 6px solid rgb(115, 114, 120); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; box-shadow: rgb(105, 46, 80) 0px 6px; margin: 10px;">
+        <filter id="dropshadow" height="130%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="3"/> <!-- stdDeviation is how much to blur -->
+          <feOffset dx="2" dy="2" result="offsetblur"/> <!-- how much to offset -->
+          <feMerge> 
+            <feMergeNode/> <!-- this contains the offset blurred image -->
+            <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+          </feMerge>
+        </filter>
+        <filter id="drop-shadow">
+<!--          <feGaussianBlur in="SourceAlpha" stdDeviation="0"/>-->
+          <feOffset dx="0" dy="3" result="offsetblur"/>
+          <feFlood flood-color="#444"/>
+          <feComposite in2="offsetblur" operator="in"/>
+          <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <g  style="font-family: 'Lobster', cursive;filter:url(#dropshadow)"><text x="0" y="20" fill="black">Hi there123456</text></g>
+        <g style="font-family: FontAwesome; text-anchor: middle;filter:url(#drop-shadow) ">
+            <text x="50" y="50" fill="red"  font-size="80px" dy=".35em">&#xf08a</text>
+<!--
+            <text x="70" y="70" fill="red">&#xf004</text>
+            <text x="50" y="70" fill="red">&#xf182</text>
+            <text x="70" y="50" fill="red">&#xf183</text>
+-->
+        </g>
+    <rect x="250" y="250" width="150" height="150" opacity="0.5"></rect>
+     <text x="100" y="100" fill="red"  font-size="80px" dy=".35em">&#xf08a</text>    
+  </svg>
+</body>

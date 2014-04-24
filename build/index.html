@@ -1,0 +1,196 @@
+<head>
+  <meta charset="utf-8">
+<!--    for the force directed graphs-->
+
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  <link href="css/threes.min.css" rel="stylesheet" type='text/css'>
+  <link href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" rel="stylesheet"> 
+  
+</head>
+<body bgcolor="#FBF9ED" style="width:440px; margin:0;padding:0" ontouchmove="event.preventDefault()" >
+  
+<!--  Home Page-->
+  <div data-role="page" id="home" style="margin:0;padding:0;background-color:#FBF9ED" >
+    <!-- <div data-role="header" >
+      <h1>My Title</h1>
+    </div>/header -->
+    <div class="contentDiv" data-role="content" style="margin:0;padding:0;width: 440px" align="center" >
+
+      <h1 style="">M&eacute;nage &agrave;  Threes</h1>
+      <ul >
+        <li> <a id="startGameButton" href="#gamePage" data-transition="slide" style="color:#BBA3F2;" >Play</a>   </li>
+         <li> <a  href="#highscores" data-transition="slide" onclick="highScoreManager.utils.insertHighScoresIntoDOM()"  style="color:#BBA3F2;">Scores</a>   </li>
+         <li> <a  href="#about" data-transition="slide" style="color:#BBA3F2;">About</a>   </li>
+      </ul>
+      <svg id="loveSVG" width="100%" height="20%"></svg>
+      <p>by Alexander White</p>
+<!--
+      <div id="forceDirectedGraphDiv">
+      </div>
+-->
+    </div><!-- /content -->
+  </div><!-- /page -->  
+  
+  
+  
+<!-- About -->
+  <div data-role="page" id="about" style="margin:0;padding:0;background-color:#FBF9ED" >
+    <!-- <div data-role="header" >
+      <h1>My Title</h1>
+    </div>/header -->
+    <div class="contentDiv noSelect" data-role="content" style="margin:0;padding:0;width: 440px" align="center" >
+      <h1 >About</h1>
+      <div style="padding-left:20px; padding-right:20px">
+        <p> Rules:  Swipe left, right, up or down to move the pieces on the board.  One boy and one girl piece can be combined to make a heart.  Hearts of equal values can be combined to make hearts of greater values.  Make as much love as possible!</p>
+        <p> Bonus points:  You can earn bonus points by upgrading hearts in an ascending sequence. Ie: 2,4, 8....</p>
+        <p> Bonus multiplier:  One square on the board is highlighted.  If you upgrade create a heart in that square any bonus points earned from that sequene will multiplied.</p>
+        <p> Controls: Mouse - swipe gestures. Keyboard - arrows or aswd.</p>
+      </div>
+      <ul >
+        <li> 
+          <a class="alexLink" href="#home" data-transition="slide" data-direction="reverse" style="color:#BBA3F2;">Main Menu</a>
+        </li>
+      </ul>
+      <div id="forceDirectedGraphDiv">
+      </div>
+    </div><!-- /content -->
+  </div><!-- /page -->  
+  
+  
+  <!-- High scores -->
+  <div data-role="page" id="highscores" style="margin:0;padding:0;background-color:#FBF9ED" >
+    <!-- <div data-role="header" >
+      <h1>My Title</h1>
+    </div>/header -->
+    <div class="contentDiv noSelect" data-role="content" style="margin:0;padding:0;width: 440px" align="center" >
+      <h1 >High Scores</h1>
+      <div id="highScoreDiv" style="padding-left:20px; padding-right:20px">
+        test
+      </div>
+      <ul >
+        <li> 
+          <a class="alexLink" href="#home" data-transition="slide" data-direction="reverse" style="color:#BBA3F2;">Main Menu</a>
+        </li>
+      </ul>
+    </div><!-- /content -->
+  </div><!-- /page -->  
+  
+   <!-- Enter name-->
+  <div data-role="page" id="enterName" style="margin:0;padding:0;background-color:#FBF9ED" >
+    <!-- <div data-role="header" >
+      <h1>My Title</h1>
+    </div>/header -->
+    <div class="contentDiv" data-role="content" style="margin:0;padding:0;width: 440px" align="center" >
+      <h1> Enter Name</h1>
+      <p>Congrats! You have earned a high score.  Enter your name.</p>
+      <div style="margin:30">
+        <input id="highScoreNameInput" type="text" value=""  />
+        <a data-role="button" href="#highscores" onclick="highScoreManager.utils.enteringNewHighScore()"  style="font-family:Lobster,cursive;font-size:35px;-webkit-text-stroke-width: 2px;-webkit-text-stroke-color:#40403E;margin:50;color:#FDDB0E;background-color:#BFBFBF;text-shadow:none; border-color:#40403E; border-width:4;padding:5px">OK</a>
+      </div>
+      <!--This is hidden.  Provides a programatic way of navigating to this page by calling $("#enterDialog").click();-->
+      <a id='enterDialog' href="#enterName" data-rel="dialog" data-transition="pop" style='display:none;'></a>
+    </div><!-- /content -->
+  </div><!-- /page -->  
+  
+   <!-- toggle sound-->
+  <div data-role="page" id="optionsPage" style="margin:0;padding:0;background-color:#FBF9ED" >
+    <!-- <div data-role="header" >
+      <h1>My Title</h1>
+    </div>/header -->
+    <div class="contentDiv" data-role="content" style="margin:0;padding:0;width: 440px" align="center" >
+      <h1> Options</h1>
+      <p>Toggle the awesome sound effects!</p>
+      <div style="margin:30">
+<!--        <label for="flip-1">Flip switch:</label>-->
+        <select id="soundToggle" data-role="slider">
+          <option value="off">Off</option>
+          <option value="on" selected>On</option>
+        </select> 
+        <a data-role="button" href="#gamePage" style="font-family:Lobster,cursive;font-size:35px;-webkit-text-stroke-width: 2px;-webkit-text-stroke-color:#40403E;margin:50;color:#FDDB0E;background-color:#BFBFBF;text-shadow:none; border-color:#40403E; border-width:4;padding:5px">Return To Game</a>
+        <a data-role="button" href="#home" style="font-family:Lobster,cursive;font-size:35px;-webkit-text-stroke-width: 2px;-webkit-text-stroke-color:#40403E;margin:50;color:#FDDB0E;background-color:#BFBFBF;text-shadow:none; border-color:#40403E; border-width:4;padding:5px">End Game</a>
+      </div>
+    </div><!-- /content -->
+  </div><!-- /page -->  
+  
+  
+<!--  Game Page-->
+  <div data-role="page" id="gamePage" style="margin:0;padding:0;background-color:#FBF9ED">
+    <div class="mainContent contentDiv noSelect"  data-role="content" style="margin:0;padding:0; width: 440px">	
+
+      <svg class="previewSvg">
+        <g class="previewGroup">
+
+        </g>
+      </svg>  
+      <svg class="messageSvg">
+      </svg>  
+      <a  href="#optionsPage">
+        <div style="color:#8869D1;float:right;margin:20px; font-size:50px;font-family: FontAwesome">
+          <i class="fa fa-bars"></i> 
+        </div>
+      </a>
+      <svg class="mainSVG">
+        <filter id="innerShadowFilter" x="-50%" y="-50%" width="200%" height="200%">		
+          <feOffset dy="5" dx="0"/>
+          <feComposite in2="SourceAlpha" operator="arithmetic"
+              k2="-1" k3="1" result="shadowDiff"/>
+          <feFlood flood-color="#E981BC" />
+          <feComposite in2="shadowDiff" operator="in" result="shadow"/>
+          <feMerge>
+            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="shadow"/>
+          </feMerge>
+        </filter>
+        <filter id="dropShadowPurpleFilter">
+          <feOffset dx="0" dy="5" result="offset"/>
+          <feFlood flood-color="#8869D1"/>
+          <feComposite in2="offset" operator="in"/>
+          <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="dropShadowTealFilter">
+          <feOffset dx="0" dy="5" result="offset"/>
+          <feFlood flood-color="#4C8EAF"/>
+          <feComposite in2="offset" operator="in"/>
+          <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="dropShadowPinkFilter">
+          <feOffset dx="0" dy="5" result="offset"/>
+          <feFlood flood-color="#D4569D"/>
+          <feComposite in2="offset" operator="in"/>
+          <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </svg>     
+      <svg class="metaGameSVG"> 
+
+      </svg>
+    </div><!-- /content -->
+  </div><!-- /page -->  
+  
+  
+  <!--
+  <script src="bower_components/d3/d3.min.js" charset="utf-8"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
+  -->
+
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <!--<script src="bower_components/jquery-cookie/jquery.cookie.js"></script>-->
+  <script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+  <!--
+  <script src="jquerymobile-swipeupdown.js"></script>
+  <script src="fontUtil.js"></script>
+  <script src="threes.js"></script>
+  <script src="highScores.js"></script>
+  -->
+  <script src="js/threes.min.js"></script>
+</body>
+
+

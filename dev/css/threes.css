@@ -1,0 +1,44 @@
+    .node {
+      stroke: #fff;
+      stroke-width: 1.5px;
+    }
+    .link {
+      stroke: #999;
+      stroke-opacity: .6;
+    }
+    text{
+      text-shadow:0 0 0;
+      font-weight: 0; 
+    }
+
+      .noSelect {
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+      }
+
+    h1{
+      font-size: 60px;
+      margin:10px
+    }
+  ul{font-size: 50px;padding:0}
+    h1, ul{
+      font-family:Lobster,cursive; 
+       
+      color:#BBA3F2; 
+      text-shadow: 3px 3px #8869D1;
+      list-style-type: none;
+    }
+    a{
+      text-decoration: none;
+      color:#BBA3F2;
+    }
+    p{
+      font-family:Lobster,cursive; 
+      color:#4C8EAF;
+      font-size: 20px;
+    }
+    .contentDiv{
+      border-width: 4px; 
+      border-style: dashed;
+      border-color: #40403E;
+    }
